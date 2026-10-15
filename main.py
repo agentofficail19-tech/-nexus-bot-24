@@ -4,7 +4,7 @@ from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 
 # NEXUS.lab - 24/24 Bot - Token ichiga qo'yildi
-BOT_TOKEN = "8533624181:AAFC8nNU2uXGZb6JsmB5_EQTajYZjrOR9BM"
+BOT_TOKEN = os.getenv("BOT_TOKEN")
 
 logging.basicConfig(level=logging.INFO)
 
