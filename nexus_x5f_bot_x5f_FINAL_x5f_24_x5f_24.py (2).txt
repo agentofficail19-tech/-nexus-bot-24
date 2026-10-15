@@ -1,0 +1,58 @@
+import os
+import logging
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
+
+# NEXUS.lab - 24/24 Bot - Token ichiga qo'yildi
+BOT_TOKEN = "8533624181:AAFC8nNU2uXGZb6JsmB5_EQTajYZjrOR9BM"
+
+logging.basicConfig(level=logging.INFO)
+
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    text = (
+        "🚀 Assalomu alaykum! NEXUS.lab ga xush kelibsiz!\n\n"
+        "Biz:\n"
+        "🌐 Professional veb-saytlar\n"
+        "🤖 Telegram botlar 24/24\n"
+        "🎨 Logo va brending qilamiz\n\n"
+        "Quyidagi menyudan tanlang:"
+    )
+    keyboard = [
+        [InlineKeyboardButton("🎨 Portfolio", url="https://instagram.com/nexuslab.uz"), InlineKeyboardButton("💼 Xizmatlar", callback_data='services')],
+        [InlineKeyboardButton("📩 Buyurtma berish", url="https://t.me/Cosmos_00012")],
+        [InlineKeyboardButton("📞 Aloqa", callback_data='contact'), InlineKeyboardButton("🌐 Sayt", url="https://nexuslab.uz")]
+    ]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    await update.message.reply_text(text, reply_markup=reply_markup)
+
+async def portfolio(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text("🎨 Portfolio: @nexuslab.uz\n👉 https://instagram.com/nexuslab.uz")
+
+async def services(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text(
+        "💼 NEXUS.lab Xizmatlar:\n\n"
+        "🌐 Veb-sayt - 500$ dan\n"
+        "  • Landing, korporativ, do'kon\n\n"
+        "🤖 Telegram bot 24/24 - 300$ dan\n"
+        "  • Avto-javob, to'lov, buyurtma\n"
+        "  • Telefon o'chiq bo'lsa ham ishlaydi\n\n"
+        "🎨 Logo / Brending - 100$ dan\n\n"
+        "Buyurtma: @Cosmos_00012"
+    )
+
+async def order(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text("📩 Buyurtma uchun: @Cosmos_00012 ga yozing! 24 soat ichida javob beramiz.")
+
+async def contact(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text("📞 Aloqa:\n👤 Admin: @Cosmos_00012\n📸 Instagram: @nexuslab.uz\n🌐 Sayt: nexuslab.uz\n📍 Toshkent, 24/24 online!")
+
+if __name__ == "__main__":
+    print("NEXUS.lab Bot 24/24 ishga tushdi...")
+    app = ApplicationBuilder().token(BOT_TOKEN).build()
+    app.add_handler(CommandHandler("start", start))
+    app.add_handler(CommandHandler("portfolio", portfolio))
+    app.add_handler(CommandHandler("services", services))
+    app.add_handler(CommandHandler("order", order))
+    app.add_handler(CommandHandler("contact", contact))
+    app.add_handler(CommandHandler("help", start))
+    app.run_polling()
